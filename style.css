@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: turquoise;
+  text-align: center;
+}
+
+#label-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#label-container div.probable {
+  background-color: #f00c;
+}
