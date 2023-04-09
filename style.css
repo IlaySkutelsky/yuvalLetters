@@ -7,11 +7,21 @@ body {
   height: 100vh;
   background-color: turquoise;
   text-align: center;
+  font-size: 3rem;
 }
 
 #label-container {
   display: flex;
   flex-direction: row-reverse;
+  justify-content: center;
+  gap: 2rem;
+  width: 80%;
+  flex-wrap: wrap;
+  margin-inline: auto;
+}
+
+#label-container div {
+  width: 8rem;
 }
 
 #label-container div.probable {
