@@ -2,9 +2,8 @@
 // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
 // the link to your model provided by Teachable Machine export panel
-const URL = "./model/";
+const URL = "./my_model/";
 let model, webcam, ctx, labelContainer, maxPredictions;
-let currChallangeIndex = 0
 
 async function init() {
     const modelURL = URL + "model.json";
@@ -17,7 +16,7 @@ async function init() {
     maxPredictions = model.getTotalClasses();
 
     // Convenience function to setup a webcam
-    const size = 400;
+    const size = 200;
     const flip = true; // whether to flip the webcam
     webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
@@ -48,19 +47,9 @@ async function predict() {
     const prediction = await model.predict(posenetOutput);
 
     for (let i = 0; i < maxPredictions; i++) {
-        const labelElm = labelContainer.childNodes[i]
-        const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelElm.innerText = classPrediction;
-        if (prediction[i].probability >= 0.98) {
-          labelElm.classList.add('probable')
-          if (i === currChallangeIndex) {
-            currChallangeIndex++
-            updateCurrentChallangeText()
-            document.getElementById('current-challange').innerText = prediction[currChallangeIndex].className
-          }
-        } else {
-          setTimeout(function() {labelElm.classList.remove('probable')}, 3000)
-        }
+        const classPrediction =
+            prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        labelContainer.childNodes[i].innerHTML = classPrediction;
     }
 
     // finally draw the poses
