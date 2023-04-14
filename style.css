@@ -8,6 +8,11 @@ body {
   background-color: turquoise;
   text-align: center;
   font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem;
 }
 
 #label-container {
@@ -26,4 +31,12 @@ body {
 
 #label-container div.probable {
   background-color: #f00c;
+}
+
+video {
+  height: 400px;
+}
+
+.hidden {
+  display: none;
 }

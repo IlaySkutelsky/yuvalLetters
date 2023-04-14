@@ -10,10 +10,13 @@
   <title>Document</title>
 </head>
 <body>
-  <button type="button" onclick="init()">Start</button>
-  <div><canvas id="canvas"></canvas></div>
-  <div id="label-container"></div>
-  <div>האות:</div>
-  <div id="current-challange">א</div>
+  <button type="button" onclick="pressedButton()">Start</button>
+  <div class="game-container hidden">
+    <canvas id="canvas"></canvas>
+    <div id="label-container"></div>
+    <div>האות:</div>
+    <div id="current-challange">א</div>
+  </div>
+  <video src="videos/א.mp4" controls></video>
 </body>
 </html>
