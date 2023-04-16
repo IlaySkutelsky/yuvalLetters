@@ -33,8 +33,15 @@ body {
   background-color: #f00c;
 }
 
+canvas {
+  position: absolute;
+}
+
 video {
   height: 400px;
+  /* height: 100%;
+  position: absolute;
+  top: 0; */
 }
 
 .hidden {

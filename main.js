@@ -5,36 +5,34 @@
 const URL = "./my_model/";
 let model, webcam, ctx, labelContainer, maxPredictions;
 let currChallangeIndex = 0
-const VIEW_VIDEO_MODE = 0
-const POSE_MODE = 1
-let mode = VIEW_VIDEO_MODE 
 let loadedModels = false
+let hasStarted = false
 
 function pressedButton() {
-    debugger
     // if (mode === POSE_MODE) return
-    if (mode === POSE_MODE) {
-        playerSuccess()
-        return
-    }
-    if (!loadedModels) init()
-    else {
-        switchToPoseMode()
+    if (!hasStarted) {
+        hasStarted=true
+        let videoElm = document.querySelector('video')
+        videoElm.classList.remove('hidden')
+        videoElm.play()
+        document.querySelector('button').classList.add('hidden')
+        document.querySelector('.game-container').classList.remove('hidden')
+        init()
     }
 }
 
-function switchToPoseMode() {
-    mode = POSE_MODE
-    document.querySelector("video").classList.add("hidden")
-    document.querySelector(".game-container").classList.remove("hidden")
-    window.requestAnimationFrame(loop);
-}
+// function switchToPoseMode() {
+//     mode = POSE_MODE
+//     document.querySelector("video").classList.add("hidden")
+//     document.querySelector(".game-container").classList.remove("hidden")
+//     window.requestAnimationFrame(loop);
+// }
 
-function switchToViewVideoMode() {
-    mode = VIEW_VIDEO_MODE
-    document.querySelector("video").classList.remove("hidden")
-    document.querySelector(".game-container").classList.add("hidden")
-}
+// function switchToViewVideoMode() {
+//     mode = VIEW_VIDEO_MODE
+//     document.querySelector("video").classList.remove("hidden")
+//     document.querySelector(".game-container").classList.add("hidden")
+// }
 
 async function init() {
     const modelURL = URL + "model.json";
@@ -63,13 +61,13 @@ async function init() {
         labelContainer.appendChild(document.createElement("div"));
     }
     loadedModels = true
-    switchToPoseMode()
+    window.requestAnimationFrame(loop);
 }
 
 async function loop(timestamp) {
     webcam.update(); // update the webcam frame
     await predict();
-    if (mode == VIEW_VIDEO_MODE) return
+    // if (mode == VIEW_VIDEO_MODE) return
     window.requestAnimationFrame(loop);
 }
 
@@ -94,14 +92,17 @@ async function predict() {
         }
     }
     // finally draw the poses
-    drawPose(pose);
+    // drawPose(pose);
 }
 
 function playerSuccess() {
     currChallangeIndex++
-    document.getElementById('current-challange').innerText = String.fromCharCode(1488+currChallangeIndex);
-    document.querySelector("video").src = "videos/ב.mp4"
-    switchToViewVideoMode()
+    let currLetter =  String.fromCharCode(1488+currChallangeIndex);
+    document.getElementById('current-challange').innerText = currLetter
+    let videoElm = document.querySelector('video')
+    videoElm.src = `videos/${currLetter}.mp4`
+    videoElm.play()
+    // switchToViewVideoMode()
 }
 
 function drawPose(pose) {
