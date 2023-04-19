@@ -7,6 +7,8 @@ let model, webcam, ctx, labelContainer, maxPredictions;
 let currChallangeIndex = 0
 let loadedModels = false
 let hasStarted = false
+let skipLetters = ["ך", "ם", "ן", "ף", "ץ"]
+let skippedLettersOffset = 0
 
 function pressedButton() {
     // if (mode === POSE_MODE) return
@@ -95,9 +97,16 @@ async function predict() {
     // drawPose(pose);
 }
 
-function playerSuccess() {
-    currChallangeIndex++
-    let currLetter =  String.fromCharCode(1488+currChallangeIndex);
+function playerSuccess(skipIncrement) {
+    if (!skipIncrement) currChallangeIndex++
+    let currLetter =  String.fromCharCode(1488+currChallangeIndex+skippedLettersOffset);
+    console.log(currLetter);
+    console.log(skipLetters.includes(currLetter))
+    if (skipLetters.includes(currLetter)) {
+        skippedLettersOffset++
+        playerSuccess(true)
+        return
+    }
     document.getElementById('current-challange').innerText = currLetter
     let videoElm = document.querySelector('video')
     videoElm.src = `videos/${currLetter}.mp4`
