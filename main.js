@@ -101,7 +101,6 @@ function playerSuccess(skipIncrement) {
     if (!skipIncrement) currChallangeIndex++
     let currLetter =  String.fromCharCode(1488+currChallangeIndex+skippedLettersOffset);
     console.log(currLetter);
-    console.log(skipLetters.includes(currLetter))
     if (skipLetters.includes(currLetter)) {
         skippedLettersOffset++
         playerSuccess(true)
