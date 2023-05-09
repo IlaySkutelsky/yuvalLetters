@@ -61,12 +61,13 @@ svg {
   top: 40px;
 }
 
-svg .letter {
+svg #letter {
   font-family: BN Oria;
   font-size: 3.7rem;
+  text-anchor: middle;
 }
 
 svg #load-bar {
   clip-path: polygon(0% 0%, 0% 0, 0% 100%, 0 100%);
-  transition: 300ms;
+  transition: 100ms;
 }
