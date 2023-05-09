@@ -74,15 +74,12 @@ async function predict() {
         // const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
         // labelElm.innerText = classPrediction;
         const loadbarElm = document.getElementById("load-bar")
-        let percent = (prediction[i].probability * 100).toFixed(2)
-        loadbarElm.style.clipPath = `polygon(0% 0%, ${percent}% 0, ${percent}% 100%, 0 100%)`
-        if (prediction[i].probability >= 0.98) {
-        //   labelElm.classList.add('probable')
-          if (i === currChallangeIndex) {
-            playerSuccess()
-          }
-        } else {
-        //   setTimeout(function() {labelElm.classList.remove('probable')}, 3000)
+        if (i === currChallangeIndex) {
+            let percent = (prediction[i].probability * 100).toFixed(2)
+            loadbarElm.style.clipPath = `polygon(0% 0%, ${percent}% 0, ${percent}% 100%, 0 100%)`
+            if (prediction[i].probability >= 0.98) {
+                playerSuccess()
+            }
         }
     }
     // finally draw the poses
@@ -90,6 +87,13 @@ async function predict() {
 }
 
 function playerSuccess(skipIncrement) {
+    if (currChallangeIndex >= 14) debugger
+    if (currChallangeIndex == 21) {
+        currChallangeIndex = 0
+        skippedLettersOffset = 0
+        skipIncrement = true
+
+    }
     if (!skipIncrement) currChallangeIndex++
     let currLetter =  String.fromCharCode(1488+currChallangeIndex+skippedLettersOffset);
     console.log(currLetter);
@@ -99,6 +103,7 @@ function playerSuccess(skipIncrement) {
         return
     }
     document.getElementById('current-challange').innerText = currLetter
+    document.getElementById('letter').innerHTML = currLetter
     let videoElm = document.querySelector('video')
     videoElm.src = `videos/${currLetter}.mp4`
     videoElm.play()
