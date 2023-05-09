@@ -1,18 +1,21 @@
+@font-face {
+  font-family: 'BN Oria';
+  src: url('assets/Fonts/BN\ Oria.ttf');
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  height: 97vh;
-  background-color: turquoise;
+  height: 100vh;
+  background-color: white;
   text-align: center;
   font-size: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  margin: 1rem;
 }
 
 #label-container {
@@ -41,12 +44,29 @@ canvas {
 }
 
 video {
-  height: 400px;
-  /* height: 100%;
+  /* height: 400px; */
+  height: 100%;
   position: absolute;
-  top: 0; */
+  top: 0;
 }
 
 .hidden {
   display: none;
+}
+
+svg {
+  width: 300px;
+  position: absolute;
+  right: 50px;
+  top: 40px;
+}
+
+svg .letter {
+  font-family: BN Oria;
+  font-size: 3.7rem;
+}
+
+svg #load-bar {
+  clip-path: polygon(0% 0%, 0% 0, 0% 100%, 0 100%);
+  transition: 300ms;
 }

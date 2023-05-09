@@ -19,6 +19,8 @@ function pressedButton() {
         videoElm.play()
         document.querySelector('button').classList.add('hidden')
         document.querySelector('.game-container').classList.remove('hidden')
+        let svgElm = document.querySelector('svg')
+        svgElm.classList.remove('hidden')
         init()
     }
 }
@@ -71,6 +73,9 @@ async function predict() {
         // const labelElm = labelContainer.childNodes[i]
         // const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
         // labelElm.innerText = classPrediction;
+        const loadbarElm = document.getElementById("load-bar")
+        let percent = (prediction[i].probability * 100).toFixed(2)
+        loadbarElm.style.clipPath = `polygon(0% 0%, ${percent}% 0, ${percent}% 100%, 0 100%)`
         if (prediction[i].probability >= 0.98) {
         //   labelElm.classList.add('probable')
           if (i === currChallangeIndex) {
