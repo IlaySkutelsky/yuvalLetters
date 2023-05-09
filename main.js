@@ -23,19 +23,6 @@ function pressedButton() {
     }
 }
 
-// function switchToPoseMode() {
-//     mode = POSE_MODE
-//     document.querySelector("video").classList.add("hidden")
-//     document.querySelector(".game-container").classList.remove("hidden")
-//     window.requestAnimationFrame(loop);
-// }
-
-// function switchToViewVideoMode() {
-//     mode = VIEW_VIDEO_MODE
-//     document.querySelector("video").classList.remove("hidden")
-//     document.querySelector(".game-container").classList.add("hidden")
-// }
-
 async function init() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
@@ -58,10 +45,10 @@ async function init() {
     const canvas = document.getElementById("canvas");
     canvas.width = size; canvas.height = size;
     ctx = canvas.getContext("2d");
-    labelContainer = document.getElementById("label-container");
-    for (let i = 0; i < maxPredictions; i++) { // and class labels
-        labelContainer.appendChild(document.createElement("div"));
-    }
+    // labelContainer = document.getElementById("label-container");
+    // for (let i = 0; i < maxPredictions; i++) { // and class labels
+    //     labelContainer.appendChild(document.createElement("div"));
+    // }
     loadedModels = true
     window.requestAnimationFrame(loop);
 }
@@ -81,16 +68,16 @@ async function predict() {
     const prediction = await model.predict(posenetOutput);
 
     for (let i = 0; i < maxPredictions; i++) {
-        const labelElm = labelContainer.childNodes[i]
-        const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelElm.innerText = classPrediction;
+        // const labelElm = labelContainer.childNodes[i]
+        // const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        // labelElm.innerText = classPrediction;
         if (prediction[i].probability >= 0.98) {
-          labelElm.classList.add('probable')
+        //   labelElm.classList.add('probable')
           if (i === currChallangeIndex) {
             playerSuccess()
           }
         } else {
-          setTimeout(function() {labelElm.classList.remove('probable')}, 3000)
+        //   setTimeout(function() {labelElm.classList.remove('probable')}, 3000)
         }
     }
     // finally draw the poses

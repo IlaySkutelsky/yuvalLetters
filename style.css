@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  height: 100vh;
+  height: 97vh;
   background-color: turquoise;
   text-align: center;
   font-size: 2rem;
@@ -16,7 +16,8 @@ body {
 }
 
 #label-container {
-  display: flex;
+  display: none;
+  /* display: flex; */
   flex-direction: row-reverse;
   justify-content: center;
   gap: 0.5rem;
@@ -27,10 +28,12 @@ body {
 
 #label-container div {
   width: 8rem;
+  transition: all 1000ms cubic-bezier(1.000, 0.001, 1.000, 0.001);
 }
 
 #label-container div.probable {
   background-color: #f00c;
+  transition: all 100ms cubic-bezier(1.000, 0.001, 1.000, 0.001);
 }
 
 canvas {
