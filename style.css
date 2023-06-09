@@ -20,6 +20,27 @@ body {
   overflow: hidden;
 }
 
+
+button#home-button {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  cursor: pointer;
+  width: 131px;
+  height: 100px;
+  z-index: 2;
+  border: none;
+  background-color: transparent;
+  background-position: 50% 50%;
+  background-size: cover;
+  background-image: url('./assets/home_button.png');
+}
+button#home-button:hover {
+  /* background-position: 55% 50%; */
+  background-image: url('./assets/home_button_hover.png');
+  /* transform: translate(-1px, 4px); */
+}
+
 /* --- Home --- */
 .home-container {
   position: relative;

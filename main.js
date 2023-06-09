@@ -12,40 +12,67 @@ let skippedLettersOffset = 0
 
 addEventListener("load", handleBodyLoaded);
 
-function handleBodyLoaded(e) {
+function setHomeState(value) {
     let coverImgElm = document.querySelector(".home-container img.cover-image")
-    coverImgElm.addEventListener("click", goToStartVideo)
     let startBtnElm = document.querySelector(".home-container svg#start-button")
-    startBtnElm.addEventListener("click", goToStartVideo)
-    // document.addEventListener("keyup", goToStartVideo)
+    if (value) {
+        coverImgElm.addEventListener("click", goToStartVideo)
+        startBtnElm.addEventListener("click", goToStartVideo)
+        coverImgElm.classList.remove("hidden")
+        startBtnElm.classList.remove("hidden")
+    } else {
+        coverImgElm.removeEventListener("click", goToStartVideo)
+        startBtnElm.removeEventListener("click", goToStartVideo)
+        coverImgElm.classList.add("hidden")
+        startBtnElm.classList.add("hidden")
+    }
+}
+
+function setStartVideoState(value) {
+    let startVideoElm = document.querySelector(".home-container video#start-video")
+    if (value) {
+        startVideoElm.classList.remove("hidden")
+        startVideoElm.addEventListener("ended", delayedGoToTrack)
+    } else {
+        startVideoElm.classList.add("hidden")
+        startVideoElm.load()
+        startVideoElm.removeEventListener("ended", delayedGoToTrack)
+    }
+}
+
+function pressedHomeButton() {
+    setStartVideoState(false)
+    setHomeState(true)
+    let homeContainer = document.querySelector("section.home-container")
+    homeContainer.classList.remove("hidden")
+
+    let trackContainer = document.querySelector("section.track-container")
+    trackContainer.classList.add("hidden")
+}
+
+function handleBodyLoaded(e) {
+    setHomeState(true)
 }
 
 function goToStartVideo(e) {
-    let coverImgElm = document.querySelector(".home-container img.cover-image")
-    coverImgElm.removeEventListener("click", goToStartVideo)
-    let startBtnElm = document.querySelector(".home-container svg#start-button")
-    startBtnElm.removeEventListener("click", goToStartVideo)
-    // document.removeEventListener("keyup", goToStartVideo)
+    setHomeState(false)
 
-    coverImgElm.classList.add("hidden")
-    startBtnElm.classList.add("hidden")
+    setStartVideoState(true)
     let startVideoElm = document.querySelector(".home-container video#start-video")
-    startVideoElm.classList.remove("hidden")
     startVideoElm.play()
-    startVideoElm.addEventListener("ended", _ => setTimeout(goToTrack, 500))
+}
+
+function delayedGoToTrack() {
+    setTimeout(goToTrack, 500)
 }
 
 function goToTrack() {
-    let startVideoElm = document.querySelector(".home-container video#start-video")
-    startVideoElm.removeEventListener("ended", goToTrack)
-
+    setStartVideoState(false)
     let homeContainer = document.querySelector("section.home-container")
     homeContainer.classList.add("hidden")
 
     let trackContainer = document.querySelector("section.track-container")
     trackContainer.classList.remove("hidden")
-
-    
 }
 
 function pressedButton() {
