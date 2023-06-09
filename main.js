@@ -10,8 +10,45 @@ let hasStarted = false
 let skipLetters = ["ך", "ם", "ן", "ף", "ץ"]
 let skippedLettersOffset = 0
 
+addEventListener("load", handleBodyLoaded);
+
+function handleBodyLoaded(e) {
+    let coverImgElm = document.querySelector(".home-container img.cover-image")
+    coverImgElm.addEventListener("click", goToStartVideo)
+    let startBtnElm = document.querySelector(".home-container svg#start-button")
+    startBtnElm.addEventListener("click", goToStartVideo)
+    // document.addEventListener("keyup", goToStartVideo)
+}
+
+function goToStartVideo(e) {
+    let coverImgElm = document.querySelector(".home-container img.cover-image")
+    coverImgElm.removeEventListener("click", goToStartVideo)
+    let startBtnElm = document.querySelector(".home-container svg#start-button")
+    startBtnElm.removeEventListener("click", goToStartVideo)
+    // document.removeEventListener("keyup", goToStartVideo)
+
+    coverImgElm.classList.add("hidden")
+    startBtnElm.classList.add("hidden")
+    let startVideoElm = document.querySelector(".home-container video#start-video")
+    startVideoElm.classList.remove("hidden")
+    startVideoElm.play()
+    startVideoElm.addEventListener("ended", _ => setTimeout(goToTrack, 500))
+}
+
+function goToTrack() {
+    let startVideoElm = document.querySelector(".home-container video#start-video")
+    startVideoElm.removeEventListener("ended", goToTrack)
+
+    let homeContainer = document.querySelector("section.home-container")
+    homeContainer.classList.add("hidden")
+
+    let trackContainer = document.querySelector("section.track-container")
+    trackContainer.classList.remove("hidden")
+
+    
+}
+
 function pressedButton() {
-    // if (mode === POSE_MODE) return
     if (!hasStarted) {
         hasStarted=true
         let videoElm = document.querySelector('video')
@@ -104,7 +141,7 @@ function playerSuccess(skipIncrement) {
     }
     document.getElementById('current-challange').innerText = currLetter
     document.getElementById('letter').innerHTML = currLetter
-    let videoElm = document.querySelector('video')
+    let videoElm = document.getElementById('letter-video')
     videoElm.src = `videos/${currLetter}.mp4`
     videoElm.play()
     // switchToViewVideoMode()

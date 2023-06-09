@@ -7,30 +7,42 @@
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
   <script src="main.js"></script>
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <title>Alpha Move</title>
 </head>
 <body>
-  <button type="button" onclick="pressedButton()">Start</button>
-  <video src="videos/א.mp4" class="hidden" autoplay></video>
-  <div class="game-container hidden">
+  <section class="home-container ">
+    <img class="cover-image" src="./assets/cover.jpg" alt="Alpha move logo">
+    <svg id="start-button" xmlns="http://www.w3.org/2000/svg" width="296" height="291" fill="none">
+      <rect class="circle" width="283" height="288" x="292" fill="#EAEAEA" rx="141.5" transform="rotate(90 292 0)"/>
+      <path class="triangle" fill="#908C8C" d="M198 138c3 2 3 5 0 7l-72 42c-3 1-6-1-6-4l-1-82c0-3 4-5 6-4l73 41Z"/>
+    </svg>
+    <video id="start-video" src="videos/start.mp4" class="hidden"></video>
+  </section>
+  <section class="track-container hidden">
+    <video id="track-video" src="videos/track.mp4" autoplay></video>
+    <button class="start-game-button" type="button" onclick="pressedButton()"></button>
+
+  </section>
+  <section class="game-container hidden">
+    <video id="letter-video" src="videos/א.mp4" class="hidden"></video>
     <canvas id="canvas" class="hidden"></canvas>
     <div id="label-container"></div>
     <div class="hidden">האות:</div>
     <div id="current-challange" class="hidden">א</div>
-  </div>
 
-  <svg xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 442 83">
-    <defs>
-      <style>
-        .blu{fill:#2c65cf}
-      </style>
-    </defs>
-    <path fill="#89b1ff" d="m5 0 437 12v67L1 81 5 0Z"/>
-    <path d="M16 19h47v49H16z" class="blu"/>
-    <path d="M430 62 73 68V21l357 10v31Z" class="blu"/>
-    <path id="load-bar" fill="#e11f8e" d="M430 62 73 68V21l357 10v31Z"/>
-    <!-- <path fill="#fff" d="m59 57-9 8-14-15v12H23V49c0-4 2-7 5-9l-5-6 10-8 11 13V28h13v8l-1 6c-2 2-4 4-6 4l9 11Z"/> -->
-    <text fill="#fff" x="9%" y="62" id="letter">א</text>
-  </svg>
+    <svg class="load-bar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 442 83">
+      <defs>
+        <style>
+          .blu{fill:#2c65cf}
+        </style>
+      </defs>
+      <path fill="#89b1ff" d="m5 0 437 12v67L1 81 5 0Z"/>
+      <path d="M16 19h47v49H16z" class="blu"/>
+      <path d="M430 62 73 68V21l357 10v31Z" class="blu"/>
+      <path id="load-bar" fill="#e11f8e" d="M430 62 73 68V21l357 10v31Z"/>
+      <!-- <path fill="#fff" d="m59 57-9 8-14-15v12H23V49c0-4 2-7 5-9l-5-6 10-8 11 13V28h13v8l-1 6c-2 2-4 4-6 4l9 11Z"/> -->
+      <text fill="#fff" x="9%" y="62" id="letter">א</text>
+    </svg>
+  </section>
 </body>
 </html>
