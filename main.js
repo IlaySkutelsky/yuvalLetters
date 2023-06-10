@@ -49,7 +49,7 @@ function pressedHomeButton() {
     let trackContainer = document.querySelector('section.track-container')
     trackContainer.classList.add('hidden')
 
-    let gameSectionElm = document.querySelector('section.game-contanier')
+    let gameSectionElm = document.querySelector('section.game-container')
     gameSectionElm.classList.add('hidden')
     let videoElm = document.querySelector('video#letter-video')
     videoElm.load()
@@ -81,7 +81,6 @@ function goToTrack() {
 }
 
 function pressedStartGameButton() {
-    debugger
     let trackContainer = document.querySelector('section.track-container')
     trackContainer.classList.add('hidden')
     let gameSectionElm = document.querySelector('section.game-container')
@@ -89,10 +88,6 @@ function pressedStartGameButton() {
     let videoElm = document.querySelector('video#letter-video')
     videoElm.classList.remove('hidden')
     videoElm.play()
-    document.querySelector('button').classList.add('hidden')
-    document.querySelector('.game-container').classList.remove('hidden')
-    let svgElm = document.querySelector('svg')
-    svgElm.classList.remove('hidden')
     init()
 }
 
@@ -158,7 +153,6 @@ async function predict() {
 }
 
 function playerSuccess(skipIncrement) {
-    if (currChallangeIndex >= 14) debugger
     if (currChallangeIndex == 21) {
         currChallangeIndex = 0
         skippedLettersOffset = 0
@@ -173,22 +167,26 @@ function playerSuccess(skipIncrement) {
         playerSuccess(true)
         return
     }
+    let letterVideoElm = document.querySelector('video#letter-video')
+    letterVideoElm.classList.add('hidden')
+    letterVideoElm.load()
+    let successVideoElm = document.querySelector('video#success-video')
+    successVideoElm.classList.remove('hidden')
+    successVideoElm.play()
+    successVideoElm.addEventListener('ended', onSuccessVideoEnded)
+}
+
+function onSuccessVideoEnded() {
+    let successVideoElm = document.querySelector('video#success-video')
+    successVideoElm.removeEventListener('ended', onSuccessVideoEnded)
+    successVideoElm.classList.add('hidden')
+    successVideoElm.load()
+    let currLetter =  String.fromCharCode(1488+currChallangeIndex+skippedLettersOffset);
     document.getElementById('current-challange').innerText = currLetter
     document.getElementById('letter').innerHTML = currLetter
     let videoElm = document.getElementById('letter-video')
+    videoElm.classList.remove('hidden')
     videoElm.src = `videos/${currLetter}.mp4`
     videoElm.play()
-    // switchToViewVideoMode()
-}
 
-function drawPose(pose) {
-    if (webcam.canvas) {
-        ctx.drawImage(webcam.canvas, 0, 0);
-        // draw the keypoints and skeleton
-        if (pose) {
-            const minPartConfidence = 0.5;
-            tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-            tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
-        }
-    }
 }

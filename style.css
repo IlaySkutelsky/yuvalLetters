@@ -140,8 +140,9 @@ canvas {
   position: absolute;
 }
 
-video#letter-video {
-  /* height: 400px; */
+video#letter-video,
+video#fail-video,
+video#success-video {
   height: 100vh;
   top: 0;
   right: 0;
