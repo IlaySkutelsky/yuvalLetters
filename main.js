@@ -2,52 +2,57 @@
 // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
 // the link to your model provided by Teachable Machine export panel
-const URL = "./my_model/";
+const URL = './my_model/';
 let model, webcam, ctx, labelContainer, maxPredictions;
 let currChallangeIndex = 0
 let loadedModels = false
 let hasStarted = false
-let skipLetters = ["ך", "ם", "ן", "ף", "ץ"]
+let skipLetters = ['ך', 'ם', 'ן', 'ף', 'ץ']
 let skippedLettersOffset = 0
 
-addEventListener("load", handleBodyLoaded);
+addEventListener('load', handleBodyLoaded);
 
 function setHomeState(value) {
-    let coverImgElm = document.querySelector(".home-container img.cover-image")
-    let startBtnElm = document.querySelector(".home-container svg#start-button")
+    let coverImgElm = document.querySelector('.home-container img.cover-image')
+    let startBtnElm = document.querySelector('.home-container svg#start-button')
     if (value) {
-        coverImgElm.addEventListener("click", goToStartVideo)
-        startBtnElm.addEventListener("click", goToStartVideo)
-        coverImgElm.classList.remove("hidden")
-        startBtnElm.classList.remove("hidden")
+        coverImgElm.addEventListener('click', goToStartVideo)
+        startBtnElm.addEventListener('click', goToStartVideo)
+        coverImgElm.classList.remove('hidden')
+        startBtnElm.classList.remove('hidden')
     } else {
-        coverImgElm.removeEventListener("click", goToStartVideo)
-        startBtnElm.removeEventListener("click", goToStartVideo)
-        coverImgElm.classList.add("hidden")
-        startBtnElm.classList.add("hidden")
+        coverImgElm.removeEventListener('click', goToStartVideo)
+        startBtnElm.removeEventListener('click', goToStartVideo)
+        coverImgElm.classList.add('hidden')
+        startBtnElm.classList.add('hidden')
     }
 }
 
 function setStartVideoState(value) {
-    let startVideoElm = document.querySelector(".home-container video#start-video")
+    let startVideoElm = document.querySelector('.home-container video#start-video')
     if (value) {
-        startVideoElm.classList.remove("hidden")
-        startVideoElm.addEventListener("ended", delayedGoToTrack)
+        startVideoElm.classList.remove('hidden')
+        startVideoElm.addEventListener('ended', delayedGoToTrack)
     } else {
-        startVideoElm.classList.add("hidden")
+        startVideoElm.classList.add('hidden')
         startVideoElm.load()
-        startVideoElm.removeEventListener("ended", delayedGoToTrack)
+        startVideoElm.removeEventListener('ended', delayedGoToTrack)
     }
 }
 
 function pressedHomeButton() {
     setStartVideoState(false)
     setHomeState(true)
-    let homeContainer = document.querySelector("section.home-container")
-    homeContainer.classList.remove("hidden")
+    let homeContainer = document.querySelector('section.home-container')
+    homeContainer.classList.remove('hidden')
 
-    let trackContainer = document.querySelector("section.track-container")
-    trackContainer.classList.add("hidden")
+    let trackContainer = document.querySelector('section.track-container')
+    trackContainer.classList.add('hidden')
+
+    let gameSectionElm = document.querySelector('section.game-contanier')
+    gameSectionElm.classList.add('hidden')
+    let videoElm = document.querySelector('video#letter-video')
+    videoElm.load()
 }
 
 function handleBodyLoaded(e) {
@@ -58,7 +63,7 @@ function goToStartVideo(e) {
     setHomeState(false)
 
     setStartVideoState(true)
-    let startVideoElm = document.querySelector(".home-container video#start-video")
+    let startVideoElm = document.querySelector('.home-container video#start-video')
     startVideoElm.play()
 }
 
@@ -68,30 +73,32 @@ function delayedGoToTrack() {
 
 function goToTrack() {
     setStartVideoState(false)
-    let homeContainer = document.querySelector("section.home-container")
-    homeContainer.classList.add("hidden")
+    let homeContainer = document.querySelector('section.home-container')
+    homeContainer.classList.add('hidden')
 
-    let trackContainer = document.querySelector("section.track-container")
-    trackContainer.classList.remove("hidden")
+    let trackContainer = document.querySelector('section.track-container')
+    trackContainer.classList.remove('hidden')
 }
 
-function pressedButton() {
-    if (!hasStarted) {
-        hasStarted=true
-        let videoElm = document.querySelector('video')
-        videoElm.classList.remove('hidden')
-        videoElm.play()
-        document.querySelector('button').classList.add('hidden')
-        document.querySelector('.game-container').classList.remove('hidden')
-        let svgElm = document.querySelector('svg')
-        svgElm.classList.remove('hidden')
-        init()
-    }
+function pressedStartGameButton() {
+    debugger
+    let trackContainer = document.querySelector('section.track-container')
+    trackContainer.classList.add('hidden')
+    let gameSectionElm = document.querySelector('section.game-container')
+    gameSectionElm.classList.remove('hidden')
+    let videoElm = document.querySelector('video#letter-video')
+    videoElm.classList.remove('hidden')
+    videoElm.play()
+    document.querySelector('button').classList.add('hidden')
+    document.querySelector('.game-container').classList.remove('hidden')
+    let svgElm = document.querySelector('svg')
+    svgElm.classList.remove('hidden')
+    init()
 }
 
 async function init() {
-    const modelURL = URL + "model.json";
-    const metadataURL = URL + "metadata.json";
+    const modelURL = URL + 'model.json';
+    const metadataURL = URL + 'metadata.json';
 
     // load the model and metadata
     // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
@@ -108,12 +115,12 @@ async function init() {
     window.requestAnimationFrame(loop);
 
     // append/get elements to the DOM
-    const canvas = document.getElementById("canvas");
+    const canvas = document.getElementById('canvas');
     canvas.width = size; canvas.height = size;
-    ctx = canvas.getContext("2d");
-    // labelContainer = document.getElementById("label-container");
+    ctx = canvas.getContext('2d');
+    // labelContainer = document.getElementById('label-container');
     // for (let i = 0; i < maxPredictions; i++) { // and class labels
-    //     labelContainer.appendChild(document.createElement("div"));
+    //     labelContainer.appendChild(document.createElement('div'));
     // }
     loadedModels = true
     window.requestAnimationFrame(loop);
@@ -135,9 +142,9 @@ async function predict() {
 
     for (let i = 0; i < maxPredictions; i++) {
         // const labelElm = labelContainer.childNodes[i]
-        // const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        // const classPrediction = prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
         // labelElm.innerText = classPrediction;
-        const loadbarElm = document.getElementById("load-bar")
+        const loadbarElm = document.getElementById('load-bar')
         if (i === currChallangeIndex) {
             let percent = (prediction[i].probability * 100).toFixed(2)
             loadbarElm.style.clipPath = `polygon(0% 0%, ${percent}% 0, ${percent}% 100%, 0 100%)`

@@ -142,9 +142,9 @@ canvas {
 
 video#letter-video {
   /* height: 400px; */
-  height: 100%;
-  position: absolute;
+  height: 100vh;
   top: 0;
+  right: 0;
 }
 
 svg.load-bar {
