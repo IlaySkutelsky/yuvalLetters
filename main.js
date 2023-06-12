@@ -9,6 +9,7 @@ let loadedModels = false
 let hasStarted = false
 let skipLetters = ['ך', 'ם', 'ן', 'ף', 'ץ']
 let skippedLettersOffset = 0
+let canSucceed = true
 
 let failVideoIntervalID
 const failVideoInteralTime = 20000
@@ -149,7 +150,7 @@ async function predict() {
         if (i === currChallangeIndex) {
             let percent = (prediction[i].probability * 100).toFixed(2)
             loadbarElm.style.clipPath = `polygon(0% 0%, ${percent}% 0, ${percent}% 100%, 0 100%)`
-            if (prediction[i].probability >= 0.98) {
+            if (prediction[i].probability >= 0.98 && canSucceed) {
                 playerSuccess()
             }
         }
@@ -159,6 +160,7 @@ async function predict() {
 }
 
 function goToFailVideo() {
+    canSucceed = false
     let letterVideoElm = document.querySelector('video#letter-video')
     letterVideoElm.classList.add('hidden')
     letterVideoElm.load()
@@ -169,6 +171,7 @@ function goToFailVideo() {
 }
 
 function failVideoEnded() {
+    canSucceed = true
     let failVideoElm = document.querySelector('video#fail-video')
     failVideoElm.removeEventListener('ended', failVideoEnded)
     failVideoElm.classList.add('hidden')
@@ -218,4 +221,6 @@ function onSuccessVideoEnded() {
     videoElm.play()
 
     failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
+    canSucceed = false
+    setTimeout(_ => canSucceed=true, 5000)
 }
