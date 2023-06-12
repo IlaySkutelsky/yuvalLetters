@@ -1,7 +1,7 @@
 /* --- General --- */
 @font-face {
-  font-family: 'BN Oria';
-  src: url('assets/Fonts/BN\ Oria.ttf');
+  font-family: 'Assistant';
+  src: url('assets/Fonts/Assistant-ExtraBold.ttf');
 }
 
 * {
@@ -163,7 +163,7 @@ svg.load-bar rect:nth-child(2) {
 }
 
 svg #letter {
-  font-family: BN Oria;
+  font-family: Assistant;
   font-size: 6rem;
   text-anchor: middle;
 }
