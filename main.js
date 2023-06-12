@@ -10,6 +10,9 @@ let hasStarted = false
 let skipLetters = ['ך', 'ם', 'ן', 'ף', 'ץ']
 let skippedLettersOffset = 0
 
+let failVideoIntervalID
+const failVideoInteralTime = 20000
+
 addEventListener('load', handleBodyLoaded);
 
 function setHomeState(value) {
@@ -118,6 +121,9 @@ async function init() {
     //     labelContainer.appendChild(document.createElement('div'));
     // }
     loadedModels = true
+    
+    failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
+
     window.requestAnimationFrame(loop);
 }
 
@@ -152,7 +158,29 @@ async function predict() {
     // drawPose(pose);
 }
 
+function goToFailVideo() {
+    let letterVideoElm = document.querySelector('video#letter-video')
+    letterVideoElm.classList.add('hidden')
+    letterVideoElm.load()
+    let failVideoElm = document.querySelector('video#fail-video')
+    failVideoElm.classList.remove('hidden')
+    failVideoElm.play()
+    failVideoElm.addEventListener('ended', failVideoEnded)
+}
+
+function failVideoEnded() {
+    let failVideoElm = document.querySelector('video#fail-video')
+    failVideoElm.removeEventListener('ended', failVideoEnded)
+    failVideoElm.classList.add('hidden')
+    failVideoElm.load()
+    let letterVideoElm = document.querySelector('video#letter-video')
+    letterVideoElm.classList.remove('hidden')
+    letterVideoElm.play()
+
+}
+
 function playerSuccess(skipIncrement) {
+    clearInterval(failVideoIntervalID)
     if (currChallangeIndex == 21) {
         currChallangeIndex = 0
         skippedLettersOffset = 0
@@ -189,4 +217,5 @@ function onSuccessVideoEnded() {
     videoElm.src = `videos/${currLetter}.mp4`
     videoElm.play()
 
+    failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
 }
