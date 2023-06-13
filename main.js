@@ -16,16 +16,18 @@ const failVideoInteralTime = 18000
 
 addEventListener('load', handleBodyLoaded);
 
+function handleBodyLoaded(e) {
+    setHomeState(true)
+}
+
 function setHomeState(value) {
     let coverImgElm = document.querySelector('.home-container img.cover-image')
     let startBtnElm = document.querySelector('.home-container svg#start-button')
     if (value) {
-        coverImgElm.addEventListener('click', goToStartVideo)
         startBtnElm.addEventListener('click', goToStartVideo)
         coverImgElm.classList.remove('hidden')
         startBtnElm.classList.remove('hidden')
     } else {
-        coverImgElm.removeEventListener('click', goToStartVideo)
         startBtnElm.removeEventListener('click', goToStartVideo)
         coverImgElm.classList.add('hidden')
         startBtnElm.classList.add('hidden')
@@ -57,10 +59,6 @@ function pressedHomeButton() {
     gameSectionElm.classList.add('hidden')
     let videoElm = document.querySelector('video#letter-video')
     videoElm.load()
-}
-
-function handleBodyLoaded(e) {
-    setHomeState(true)
 }
 
 function goToStartVideo(e) {
