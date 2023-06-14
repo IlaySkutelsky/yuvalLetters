@@ -94,6 +94,10 @@ function pressedStartGameButton() {
     let videoElm = document.querySelector('video#letter-video')
     videoElm.classList.remove('hidden')
     videoElm.play()
+
+    failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
+    setTimeout(setZihuy, 6000, true)
+
     init()
 }
 
@@ -125,8 +129,6 @@ async function init() {
     // }
     loadedModels = true
     
-    failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
-
     window.requestAnimationFrame(loop);
 }
 
@@ -162,7 +164,7 @@ async function predict() {
 }
 
 function goToFailVideo() {
-    canSucceed = false
+    setZihuy(false)
     let letterVideoElm = document.querySelector('video#letter-video')
     letterVideoElm.classList.add('hidden')
     letterVideoElm.load()
@@ -173,7 +175,7 @@ function goToFailVideo() {
 }
 
 function failVideoEnded() {
-    canSucceed = true
+    setZihuy(true)
     let failVideoElm = document.querySelector('video#fail-video')
     failVideoElm.removeEventListener('ended', failVideoEnded)
     failVideoElm.classList.add('hidden')
@@ -207,6 +209,9 @@ function playerSuccess(skipIncrement) {
     successVideoElm.classList.remove('hidden')
     successVideoElm.play()
     successVideoElm.addEventListener('ended', onSuccessVideoEnded)
+
+    setZihuy(false)
+    setTimeout(setZihuy, 6000, true)
 }
 
 function onSuccessVideoEnded() {
@@ -223,6 +228,12 @@ function onSuccessVideoEnded() {
     videoElm.play()
 
     failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
-    canSucceed = false
-    setTimeout(_ => canSucceed=true, 5000)
+}
+
+function setZihuy(value) {
+    console.log('set zihuy got: ' + value);
+    canSucceed = value
+    let loadBarElm = document.querySelector('.load-bar-container')
+    if (value) loadBarElm.classList.remove('hidden')
+    else loadBarElm.classList.add('hidden')
 }
