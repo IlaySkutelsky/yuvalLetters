@@ -227,11 +227,13 @@ function onSuccessVideoEnded() {
     videoElm.src = `videos/${currLetter}.mp4`
     videoElm.play()
 
+    let loadBarSpriteElm = document.querySelector('.load-bar-container img.sprite')
+    loadBarSpriteElm.src = `./assets/sprite/${currLetter}.png`
+
     failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
 }
 
 function setZihuy(value) {
-    console.log('set zihuy got: ' + value);
     canSucceed = value
     let loadBarElm = document.querySelector('.load-bar-container')
     if (value) loadBarElm.classList.remove('hidden')
