@@ -80,6 +80,10 @@ function goToTrack() {
 
     let trackContainer = document.querySelector('section.track-container')
     trackContainer.classList.remove('hidden')
+
+    let videoElm = document.querySelector('section.track-container video#track-video')
+    videoElm.play()
+
 }
 
 function pressedStartGameButton() {
