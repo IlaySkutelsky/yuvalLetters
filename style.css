@@ -89,6 +89,7 @@ section.track-container {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+  padding-block: 30px;
 }
 
 .track-container video#track-video {
