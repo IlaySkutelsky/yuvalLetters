@@ -211,7 +211,6 @@ function playerSuccess(skipIncrement) {
     successVideoElm.addEventListener('ended', onSuccessVideoEnded)
 
     setZihuy(false)
-    setTimeout(setZihuy, 6000, true)
 }
 
 function onSuccessVideoEnded() {
@@ -231,6 +230,7 @@ function onSuccessVideoEnded() {
     loadBarSpriteElm.src = `./assets/sprite/${currLetter}.png`
 
     failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
+    setTimeout(setZihuy, 6000, true)
 }
 
 function setZihuy(value) {
