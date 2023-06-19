@@ -12,7 +12,7 @@ let skippedLettersOffset = 0
 let canSucceed = true
 
 let failVideoIntervalID
-const failVideoInteralTime = 10000
+const failVideoInteralTime = 15000
 
 addEventListener('load', handleBodyLoaded);
 
