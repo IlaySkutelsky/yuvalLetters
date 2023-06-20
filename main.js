@@ -57,8 +57,15 @@ function pressedHomeButton() {
 
     let gameSectionElm = document.querySelector('section.game-container')
     gameSectionElm.classList.add('hidden')
-    let videoElm = document.querySelector('video#letter-video')
-    videoElm.load()
+    let videoElms = document.querySelectorAll('video')
+    clearInterval(failVideoIntervalID)
+    videoElms.forEach(v => v.load())
+    setZihuy(false)
+
+    let loadBarSpriteElm = document.querySelector('.load-bar-container img.sprite')
+    loadBarSpriteElm.src = `./assets/sprite/א.png`
+    currChallangeIndex = 0
+    skippedLettersOffset = 0
 }
 
 function goToStartVideo(e) {
@@ -192,7 +199,6 @@ function playerSuccess(skipIncrement) {
         currChallangeIndex = 0
         skippedLettersOffset = 0
         skipIncrement = true
-
     }
     if (!skipIncrement) currChallangeIndex++
     let currLetter =  String.fromCharCode(1488+currChallangeIndex+skippedLettersOffset);
