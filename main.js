@@ -11,13 +11,17 @@ let skipLetters = ['ך', 'ם', 'ן', 'ף', 'ץ']
 let skippedLettersOffset = 0
 let canSucceed = true
 
-let failVideoIntervalID
-const failVideoInteralTime = 15000
+let failVideoTimeoutID
+let failVideoIntervalTime = 15000
 
 addEventListener('load', handleBodyLoaded);
 
 function handleBodyLoaded(e) {
     setHomeState(true)
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const failVideoTimeParam = urlParams.get('try-again-time');
+    failVideoIntervalTime = (Number(failVideoTimeParam)*1000);
 }
 
 function setHomeState(value) {
@@ -58,7 +62,7 @@ function pressedHomeButton() {
     let gameSectionElm = document.querySelector('section.game-container')
     gameSectionElm.classList.add('hidden')
     let videoElms = document.querySelectorAll('video')
-    clearInterval(failVideoIntervalID)
+    clearTimeout(failVideoTimeoutID)
     videoElms.forEach(v => v.load())
     setZihuy(false)
 
@@ -102,7 +106,7 @@ function pressedStartGameButton() {
     videoElm.classList.remove('hidden')
     videoElm.play()
 
-    failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
+    failVideoTimeoutID = setTimeout(goToFailVideo, failVideoIntervalTime)
     setTimeout(setZihuy, 6000, true)
 
     init()
@@ -191,10 +195,11 @@ function failVideoEnded() {
     letterVideoElm.classList.remove('hidden')
     letterVideoElm.play()
 
+    failVideoTimeoutID = setTimeout(goToFailVideo, failVideoIntervalTime)
 }
 
 function playerSuccess(skipIncrement) {
-    clearInterval(failVideoIntervalID)
+    clearTimeout(failVideoTimeoutID)
     if (currChallangeIndex == 21) {
         currChallangeIndex = 0
         skippedLettersOffset = 0
@@ -235,7 +240,7 @@ function onSuccessVideoEnded() {
     let loadBarSpriteElm = document.querySelector('.load-bar-container img.sprite')
     loadBarSpriteElm.src = `./assets/sprite/${currLetter}.png`
 
-    failVideoIntervalID = setInterval(goToFailVideo, failVideoInteralTime)
+    failVideoTimeoutID = setTimeout(goToFailVideo, failVideoIntervalTime)
     setTimeout(setZihuy, 6000, true)
 }
 
