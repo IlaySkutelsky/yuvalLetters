@@ -12,7 +12,7 @@ let skippedLettersOffset = 0
 let canSucceed = true
 
 let failVideoTimeoutID
-let failVideoIntervalTime = 15000
+let failVideoIntervalTime = 12500
 
 addEventListener('load', handleBodyLoaded);
 
@@ -21,7 +21,7 @@ function handleBodyLoaded(e) {
 
     const urlParams = new URLSearchParams(window.location.search);
     const failVideoTimeParam = urlParams.get('try-again-time');
-    failVideoIntervalTime = (Number(failVideoTimeParam)*1000);
+    if (failVideoTimeParam) failVideoIntervalTime = (Number(failVideoTimeParam)*1000);
 }
 
 function setHomeState(value) {
