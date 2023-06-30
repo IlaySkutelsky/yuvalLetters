@@ -66,6 +66,8 @@ function pressedHomeButton() {
     videoElms.forEach(v => v.load())
     setZihuy(false)
 
+    let letterVideoElmElm = document.querySelector('.game-container video#letter-video')
+    letterVideoElmElm.src = `videos/א.mp4`
     let loadBarSpriteElm = document.querySelector('.load-bar-container img.sprite')
     loadBarSpriteElm.src = `./assets/sprite/א.png`
     currChallangeIndex = 0
