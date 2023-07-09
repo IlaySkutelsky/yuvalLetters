@@ -11,6 +11,8 @@ let skipLetters = ['ך', 'ם', 'ן', 'ף', 'ץ']
 let skippedLettersOffset = 0
 let canSucceed = true
 
+let gameLoopRunning = false
+
 let failVideoTimeoutID
 let failVideoIntervalTime = 12500
 
@@ -50,7 +52,7 @@ function setStartVideoState(value) {
     }
 }
 
-function pressedHomeButton() {
+function pressedHomeButton(noRecursion) {
     setStartVideoState(false)
     setHomeState(true)
     let homeContainer = document.querySelector('section.home-container')
@@ -72,6 +74,10 @@ function pressedHomeButton() {
     loadBarSpriteElm.src = `./assets/sprite/א.png`
     currChallangeIndex = 0
     skippedLettersOffset = 0
+
+    gameLoopRunning = false
+
+    if (!noRecursion) setTimeout(noRecursion, 100, true)
 }
 
 function goToStartVideo(e) {
@@ -111,6 +117,8 @@ function pressedStartGameButton() {
     failVideoTimeoutID = setTimeout(goToFailVideo, failVideoIntervalTime)
     setTimeout(setZihuy, 6000, true)
 
+    gameLoopRunning = true
+
     init()
 }
 
@@ -149,6 +157,7 @@ async function loop(timestamp) {
     webcam.update(); // update the webcam frame
     await predict();
     // if (mode == VIEW_VIDEO_MODE) return
+    if (!gameLoopRunning) return
     window.requestAnimationFrame(loop);
 }
 
