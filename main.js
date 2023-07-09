@@ -75,6 +75,9 @@ function pressedHomeButton(noRecursion) {
     currChallangeIndex = 0
     skippedLettersOffset = 0
 
+    let currLetter =  String.fromCharCode(1488+currChallangeIndex+skippedLettersOffset);
+    document.getElementById('letter').innerHTML = currLetter
+
     gameLoopRunning = false
 
     if (!noRecursion) setTimeout(noRecursion, 100, true)
@@ -241,7 +244,6 @@ function onSuccessVideoEnded() {
     successVideoElm.classList.add('hidden')
     successVideoElm.load()
     let currLetter =  String.fromCharCode(1488+currChallangeIndex+skippedLettersOffset);
-    document.getElementById('current-challange').innerText = currLetter
     document.getElementById('letter').innerHTML = currLetter
     let videoElm = document.getElementById('letter-video')
     videoElm.classList.remove('hidden')
