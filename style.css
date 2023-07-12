@@ -48,7 +48,7 @@ button#home-button:hover {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 }
 
 img.cover-image {
@@ -60,7 +60,8 @@ img.cover-image {
 }
 
 svg#start-button {
-  height: 95px;
+  height: 50px;
+  margin-bottom: 100px;
   cursor: pointer;
   z-index: 1;
   filter: drop-shadow(0px 2px 2px #0007);
@@ -152,20 +153,20 @@ video#success-video {
 
 .load-bar-container {
   position: absolute;
-  right: 50px;
-  bottom: 10px;
-  height: 290px;
+  right: 70px;
+  bottom: 40px;
+  height: 380px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .load-bar-container img.sprite {
-  height: 220px;
+  height: 300px;
 }
 
 svg.load-bar {
-  height: 45px;
+  height: 66px;
 }
 
 svg.load-bar rect:nth-child(1) {
