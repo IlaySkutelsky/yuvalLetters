@@ -60,8 +60,10 @@ img.cover-image {
 }
 
 svg#start-button {
-  height: 50px;
-  margin-bottom: 100px;
+  height: 43px;
+  margin-bottom: 95px;
+  /* height: 50px;
+  margin-bottom: 100px; */
   cursor: pointer;
   z-index: 1;
   filter: drop-shadow(0px 2px 2px #0007);
@@ -153,20 +155,20 @@ video#success-video {
 
 .load-bar-container {
   position: absolute;
-  right: 70px;
-  bottom: 40px;
-  height: 380px;
+  right: 60px;
+  bottom: 20px;
+  height: 340px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .load-bar-container img.sprite {
-  height: 300px;
+  height: 280px;
 }
 
 svg.load-bar {
-  height: 66px;
+  height: 56px;
 }
 
 svg.load-bar rect:nth-child(1) {
