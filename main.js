@@ -27,8 +27,8 @@ function handleBodyLoaded(e) {
 }
 
 function setHomeState(value) {
-    let coverImgElm = document.querySelector('.home-container img.cover-image')
-    let startBtnElm = document.querySelector('.home-container svg#start-button')
+    let coverImgElm = document.querySelector('.home-container .cover-image')
+    let startBtnElm = document.querySelector('.home-container button#start-button')
     if (value) {
         startBtnElm.addEventListener('click', goToStartVideo)
         coverImgElm.classList.remove('hidden')
@@ -86,6 +86,12 @@ function pressedHomeButton(noRecursion) {
 function goToStartVideo(e) {
     setHomeState(false)
 
+    let homeBtn = document.querySelector('#home-button')
+    homeBtn.classList.remove('hidden')
+
+    let textWrapperElm = document.querySelector('.home-container .text-wrapper')
+    textWrapperElm.classList.add('hidden')
+
     setStartVideoState(true)
     let startVideoElm = document.querySelector('.home-container video#start-video')
     startVideoElm.play()
@@ -96,6 +102,10 @@ function delayedGoToTrack() {
 }
 
 function goToTrack() {
+    window.addEventListener("wheel", function (e) {
+        if (!e.target.classList.contains('x-scroll')) return
+        e.target.scrollLeft += e.deltaY
+    });
     setStartVideoState(false)
     let homeContainer = document.querySelector('section.home-container')
     homeContainer.classList.add('hidden')
@@ -105,7 +115,6 @@ function goToTrack() {
 
     let videoElm = document.querySelector('section.track-container video#track-video')
     videoElm.play()
-
 }
 
 function pressedStartGameButton() {
